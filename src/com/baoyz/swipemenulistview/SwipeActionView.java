@@ -67,11 +67,11 @@ public class SwipeActionView extends LinearLayout implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if (onActionClickListener != null && mLayout.isOpen()) {
-            onActionClickListener.onActionClick(this, mMenu, v.getId());
+            onActionClickListener.onActionClick(); //this , mMenu, v.getId());
         }
     }
 
-    public OnMenuActionClickListener getOnSwipeItemClickListener() {
+    public OnMenuActionClickListener getOnSwipeActionClickListener() {
         return onActionClickListener;
     }
 
@@ -84,6 +84,6 @@ public class SwipeActionView extends LinearLayout implements View.OnClickListene
     }
 
     public static interface OnMenuActionClickListener {
-        void onActionClick(SwipeActionView view, SwipeMenu menu, int index);
+        void onActionClick();
     }
 }

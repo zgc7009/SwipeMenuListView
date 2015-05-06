@@ -30,7 +30,7 @@ public class SwipeMenuLayout extends FrameLayout {
 
 	private static final int STATE_CLOSE = 0;
 	private static final int STATE_PARTIALLY_OPEN = 1;
-    private static final int STATE_FULLY_OPEN = 2;
+    //private static final int STATE_FULLY_OPEN = 2;
 
 	private int MIN_FLING = dp2px(15);
 	private int MAX_VELOCITYX = -dp2px(500);
@@ -138,10 +138,13 @@ public class SwipeMenuLayout extends FrameLayout {
 			// Log.i("byz", "downX = " + mDownX + ", moveX = " + event.getX());
             Log.d(getClass().getSimpleName(), "Moving");
 			int dis = (int) (mDownX - event.getX());
+            /*
             if (state == STATE_FULLY_OPEN) {
                 dis += mActionView.getWidth();
             }
-			else if (state == STATE_PARTIALLY_OPEN) {
+            */
+
+			if (state == STATE_PARTIALLY_OPEN) {
 				dis += mMenuView.getWidth();
 			}
 			swipe(dis);
@@ -151,8 +154,8 @@ public class SwipeMenuLayout extends FrameLayout {
 
             // if we aren't flinging AND scrolling past the extent of our menu view
             // fully open
-            if(state != STATE_FULLY_OPEN && !isFling && (mDownX - event.getX()) > mMenuView.getWidth())
-                smoothFullyOpenMenu();
+            if(!isFling && (mDownX - event.getX()) > mMenuView.getWidth())
+                smoothPerformAction();
 
             // else if we are flinging OR scrolling and have scrolled at least half the width of the menu view
             // partially open
@@ -170,7 +173,8 @@ public class SwipeMenuLayout extends FrameLayout {
 	}
 
 	public boolean isOpen() {
-		return state == STATE_FULLY_OPEN || state == STATE_PARTIALLY_OPEN;
+		return //state == STATE_FULLY_OPEN ||
+		        state == STATE_PARTIALLY_OPEN;
 	}
 
 	@Override
@@ -181,8 +185,11 @@ public class SwipeMenuLayout extends FrameLayout {
     private void swipe(int dis) {
         Log.d(getClass().getSimpleName(), "Dis " + dis + " vs Width " + mMenuView.getWidth());
         boolean fullyOpen = false;
-        if (dis > mMenuView.getWidth() && state != STATE_PARTIALLY_OPEN)
+        if (dis > mMenuView.getWidth() && state != STATE_PARTIALLY_OPEN) {
             fullyOpen = true;
+            if(dis > mContentView.getWidth() - FULL_OPEN_BUFFER)
+                dis = mContentView.getWidth() - FULL_OPEN_BUFFER;
+        }
         else if (dis > mMenuView.getWidth())            // keep smoothPartiallyOpenMenu from opening too far
             dis = mMenuView.getWidth();
 		else if (dis < 0)                               // keep from scrolling right
@@ -202,19 +209,14 @@ public class SwipeMenuLayout extends FrameLayout {
             mMenuView.layout(mContentView.getWidth(), mMenuView.getTop(),
                     mContentView.getWidth() + mMenuView.getWidth(), mMenuView.getBottom());
             mActionView.setBackgroundColor(Color.BLUE);
-            mActionView.layout(FULL_OPEN_BUFFER, mMenuView.getTop(), mContentView.getWidth(), mMenuView.getBottom());
-            /*
-            mActionView.layout(mContentView.getWidth() - dis, mActionView.getTop(),
-                    mContentView.getWidth() + mActionView.getWidth() - dis,
-                    mActionView.getBottom());
-            */
-            Log.d(getClass().getSimpleName(), "Our view is now showing with width " + mActionView.getWidth()
-                    + " and height " + mActionView.getHeight());
+            mActionView.layout(mContentView.getWidth() - dis, mMenuView.getTop(),
+                    mContentView.getWidth(), mMenuView.getBottom());
         }
 	}
 
 	@Override
 	public void computeScroll() {
+        Log.d(getClass().getSimpleName(), "We are computer scroll with state " + state);
 		if (state == STATE_PARTIALLY_OPEN) {
 			if (mOpenScroller.computeScrollOffset()) {
 				swipe(mOpenScroller.getCurrX());
@@ -245,14 +247,10 @@ public class SwipeMenuLayout extends FrameLayout {
 		postInvalidate();
 	}
 
-    public void smoothFullyOpenMenu(){
+    public void smoothPerformAction(){
         Log.d(getClass().getSimpleName(), "Fully opening");
-        state = STATE_FULLY_OPEN;
-
-        //mOpenScroller.startScroll(startX, startY, dX, dY, duration)
-        mOpenScroller.startScroll(-mContentView.getLeft(), 0,
-                100, 0, 400);
-        postInvalidate();
+        mActionView.getOnSwipeActionClickListener().onActionClick();
+        smoothCloseMenu();
     }
 
 	public void closeMenu() {
@@ -260,7 +258,8 @@ public class SwipeMenuLayout extends FrameLayout {
 		if (mCloseScroller.computeScrollOffset()) {
 			mCloseScroller.abortAnimation();
 		}
-		if (state == STATE_FULLY_OPEN || state == STATE_PARTIALLY_OPEN) {
+		if (//state == STATE_FULLY_OPEN ||
+            state == STATE_PARTIALLY_OPEN) {
 			state = STATE_CLOSE;
 			swipe(0);
 		}

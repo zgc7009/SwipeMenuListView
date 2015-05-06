@@ -56,8 +56,8 @@
               <file leaf-file-name="SwipeMenuAdapter.java" pinned="false" current="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuAdapter.java">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.45454547" vertical-offset="1260" max-vertical-offset="2460">
-                      <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
+                    <state vertical-scroll-proportion="0.38636363" vertical-offset="1608" max-vertical-offset="2460">
+                      <caret line="120" column="30" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
                       <folding>
                         <element signature="imports" expanded="true" />
                       </folding>
@@ -72,18 +72,20 @@
               <file leaf-file-name="SwipeMenuLayout.java" pinned="false" current="true" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.5976096" vertical-offset="2820" max-vertical-offset="4770">
-                      <caret line="202" column="36" selection-start-line="202" selection-start-column="36" selection-end-line="202" selection-end-column="36" />
+                    <state vertical-scroll-proportion="0.32882884" vertical-offset="2597" max-vertical-offset="4815">
+                      <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
                       <folding>
                         <element signature="imports" expanded="true" />
-                        <element signature="e#3553#3554#0" expanded="true" />
-                        <element signature="e#3586#3587#0" expanded="true" />
-                        <element signature="e#5204#5205#0" expanded="true" />
-                        <element signature="e#5276#5277#0" expanded="true" />
-                        <element signature="e#8773#8774#0" expanded="true" />
-                        <element signature="e#8799#8800#0" expanded="true" />
-                        <element signature="e#8838#8839#0" expanded="true" />
-                        <element signature="e#8861#8862#0" expanded="true" />
+                        <element signature="e#1907#1908#0" expanded="true" />
+                        <element signature="e#1929#1930#0" expanded="true" />
+                        <element signature="e#3555#3556#0" expanded="true" />
+                        <element signature="e#3588#3589#0" expanded="true" />
+                        <element signature="e#5349#5350#0" expanded="true" />
+                        <element signature="e#5388#5389#0" expanded="true" />
+                        <element signature="e#8526#8527#0" expanded="true" />
+                        <element signature="e#8552#8553#0" expanded="true" />
+                        <element signature="e#8591#8592#0" expanded="true" />
+                        <element signature="e#8614#8615#0" expanded="true" />
                       </folding>
                     </state>
                   </provider>
@@ -102,14 +104,12 @@
               <file leaf-file-name="SwipeActionView.java" pinned="false" current="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeActionView.java">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="-3.2727273" vertical-offset="540" max-vertical-offset="1425">
-                      <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+                    <state vertical-scroll-proportion="-0.7818182" vertical-offset="932" max-vertical-offset="1425">
+                      <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
                       <folding>
                         <element signature="imports" expanded="true" />
-                        <element signature="e#2304#2305#0" expanded="true" />
-                        <element signature="e#2348#2349#0" expanded="true" />
-                        <element signature="e#2556#2557#0" expanded="true" />
-                        <element signature="e#2594#2595#0" expanded="true" />
+                        <element signature="e#2564#2565#0" expanded="true" />
+                        <element signature="e#2602#2603#0" expanded="true" />
                       </folding>
                     </state>
                   </provider>
@@ -923,11 +923,11 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenu.java" />
-        <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeActionView.java" />
         <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuView.java" />
-        <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/test/MainActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/activity_list.xml" />
+        <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuAdapter.java" />
+        <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeActionView.java" />
         <option value="$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java" />
       </list>
     </option>
@@ -1363,30 +1363,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java</url>
-          <line>232</line>
+          <line>214</line>
           <properties />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java</url>
-          <line>252</line>
-          <properties />
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java</url>
-          <line>57</line>
-          <properties />
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java</url>
-          <line>55</line>
-          <properties />
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="29" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -1432,14 +1414,16 @@
           <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3553#3554#0" expanded="true" />
-            <element signature="e#3586#3587#0" expanded="true" />
-            <element signature="e#5204#5205#0" expanded="true" />
-            <element signature="e#5276#5277#0" expanded="true" />
-            <element signature="e#8773#8774#0" expanded="true" />
-            <element signature="e#8799#8800#0" expanded="true" />
-            <element signature="e#8838#8839#0" expanded="true" />
-            <element signature="e#8861#8862#0" expanded="true" />
+            <element signature="e#1907#1908#0" expanded="true" />
+            <element signature="e#1929#1930#0" expanded="true" />
+            <element signature="e#3555#3556#0" expanded="true" />
+            <element signature="e#3588#3589#0" expanded="true" />
+            <element signature="e#5349#5350#0" expanded="true" />
+            <element signature="e#5388#5389#0" expanded="true" />
+            <element signature="e#8526#8527#0" expanded="true" />
+            <element signature="e#8552#8553#0" expanded="true" />
+            <element signature="e#8591#8592#0" expanded="true" />
+            <element signature="e#8614#8615#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1524,14 +1508,16 @@
           <caret line="69" column="32" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3553#3554#0" expanded="true" />
-            <element signature="e#3586#3587#0" expanded="true" />
-            <element signature="e#5204#5205#0" expanded="true" />
-            <element signature="e#5276#5277#0" expanded="true" />
-            <element signature="e#8773#8774#0" expanded="true" />
-            <element signature="e#8799#8800#0" expanded="true" />
-            <element signature="e#8838#8839#0" expanded="true" />
-            <element signature="e#8861#8862#0" expanded="true" />
+            <element signature="e#1907#1908#0" expanded="true" />
+            <element signature="e#1929#1930#0" expanded="true" />
+            <element signature="e#3555#3556#0" expanded="true" />
+            <element signature="e#3588#3589#0" expanded="true" />
+            <element signature="e#5349#5350#0" expanded="true" />
+            <element signature="e#5388#5389#0" expanded="true" />
+            <element signature="e#8526#8527#0" expanded="true" />
+            <element signature="e#8552#8553#0" expanded="true" />
+            <element signature="e#8591#8592#0" expanded="true" />
+            <element signature="e#8614#8615#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1616,14 +1602,16 @@
           <caret line="114" column="45" selection-start-line="114" selection-start-column="45" selection-end-line="114" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3553#3554#0" expanded="true" />
-            <element signature="e#3586#3587#0" expanded="true" />
-            <element signature="e#5204#5205#0" expanded="true" />
-            <element signature="e#5276#5277#0" expanded="true" />
-            <element signature="e#8773#8774#0" expanded="true" />
-            <element signature="e#8799#8800#0" expanded="true" />
-            <element signature="e#8838#8839#0" expanded="true" />
-            <element signature="e#8861#8862#0" expanded="true" />
+            <element signature="e#1907#1908#0" expanded="true" />
+            <element signature="e#1929#1930#0" expanded="true" />
+            <element signature="e#3555#3556#0" expanded="true" />
+            <element signature="e#3588#3589#0" expanded="true" />
+            <element signature="e#5349#5350#0" expanded="true" />
+            <element signature="e#5388#5389#0" expanded="true" />
+            <element signature="e#8526#8527#0" expanded="true" />
+            <element signature="e#8552#8553#0" expanded="true" />
+            <element signature="e#8591#8592#0" expanded="true" />
+            <element signature="e#8614#8615#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1731,14 +1719,16 @@
           <caret line="104" column="64" selection-start-line="104" selection-start-column="64" selection-end-line="104" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3553#3554#0" expanded="true" />
-            <element signature="e#3586#3587#0" expanded="true" />
-            <element signature="e#5204#5205#0" expanded="true" />
-            <element signature="e#5276#5277#0" expanded="true" />
-            <element signature="e#8773#8774#0" expanded="true" />
-            <element signature="e#8799#8800#0" expanded="true" />
-            <element signature="e#8838#8839#0" expanded="true" />
-            <element signature="e#8861#8862#0" expanded="true" />
+            <element signature="e#1907#1908#0" expanded="true" />
+            <element signature="e#1929#1930#0" expanded="true" />
+            <element signature="e#3555#3556#0" expanded="true" />
+            <element signature="e#3588#3589#0" expanded="true" />
+            <element signature="e#5349#5350#0" expanded="true" />
+            <element signature="e#5388#5389#0" expanded="true" />
+            <element signature="e#8526#8527#0" expanded="true" />
+            <element signature="e#8552#8553#0" expanded="true" />
+            <element signature="e#8591#8592#0" expanded="true" />
+            <element signature="e#8614#8615#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1856,16 +1846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45454547" vertical-offset="1260" max-vertical-offset="2460">
-          <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="542" max-vertical-offset="1005">
@@ -1891,28 +1871,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1380">
-          <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeActionView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2727273" vertical-offset="540" max-vertical-offset="1425">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2304#2305#0" expanded="true" />
-            <element signature="e#2348#2349#0" expanded="true" />
-            <element signature="e#2556#2557#0" expanded="true" />
-            <element signature="e#2594#2595#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/activity_list.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1924,20 +1882,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java">
+    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5976096" vertical-offset="2820" max-vertical-offset="4770">
-          <caret line="202" column="36" selection-start-line="202" selection-start-column="36" selection-end-line="202" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1380">
+          <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38636363" vertical-offset="1608" max-vertical-offset="2460">
+          <caret line="120" column="30" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3553#3554#0" expanded="true" />
-            <element signature="e#3586#3587#0" expanded="true" />
-            <element signature="e#5204#5205#0" expanded="true" />
-            <element signature="e#5276#5277#0" expanded="true" />
-            <element signature="e#8773#8774#0" expanded="true" />
-            <element signature="e#8799#8800#0" expanded="true" />
-            <element signature="e#8838#8839#0" expanded="true" />
-            <element signature="e#8861#8862#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeActionView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7818182" vertical-offset="932" max-vertical-offset="1425">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2564#2565#0" expanded="true" />
+            <element signature="e#2602#2603#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/baoyz/swipemenulistview/SwipeMenuLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32882884" vertical-offset="2597" max-vertical-offset="4815">
+          <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1907#1908#0" expanded="true" />
+            <element signature="e#1929#1930#0" expanded="true" />
+            <element signature="e#3555#3556#0" expanded="true" />
+            <element signature="e#3588#3589#0" expanded="true" />
+            <element signature="e#5349#5350#0" expanded="true" />
+            <element signature="e#5388#5389#0" expanded="true" />
+            <element signature="e#8526#8527#0" expanded="true" />
+            <element signature="e#8552#8553#0" expanded="true" />
+            <element signature="e#8591#8592#0" expanded="true" />
+            <element signature="e#8614#8615#0" expanded="true" />
           </folding>
         </state>
       </provider>

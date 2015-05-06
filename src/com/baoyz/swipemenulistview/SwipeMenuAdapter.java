@@ -118,7 +118,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnSwipeItemClickLis
 	}
 
     @Override
-    public void onActionClick(SwipeActionView view, SwipeMenu menu, int index) {
+    public void onActionClick() {
 
     }
 
