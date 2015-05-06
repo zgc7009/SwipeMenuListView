@@ -7,9 +7,11 @@ import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView.OnMenuItemClickListener;
 
 public class MainActivity extends Activity {
 
+    private SwipeMenuListView mListView;
     private List<ApplicationInfo> mAppList;
     private AppAdapter mAdapter;
 
@@ -33,9 +36,9 @@ public class MainActivity extends Activity {
 
         mAppList = getPackageManager().getInstalledApplications(0);
 
-        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listView);
+        mListView = (SwipeMenuListView) findViewById(R.id.listView);
         mAdapter = new AppAdapter();
-        listView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
         // step 1. create a MenuCreator
         ISwipeMenuCreator creator = new ISwipeMenuCreator() {
@@ -71,6 +74,8 @@ public class MainActivity extends Activity {
                 item2.setWidth(dp2px(90));
                 item2.setIcon(R.drawable.ic_action_good);
                 menu.addMenuItem(item2);
+
+                addMenuAction(menu);
             }
 
             private void createMenu2(SwipeMenu menu) {
@@ -88,6 +93,8 @@ public class MainActivity extends Activity {
                 item2.setWidth(dp2px(90));
                 item2.setIcon(R.drawable.ic_action_discard);
                 menu.addMenuItem(item2);
+
+                addMenuAction(menu);
             }
 
             private void createMenu3(SwipeMenu menu) {
@@ -105,13 +112,24 @@ public class MainActivity extends Activity {
                 item2.setWidth(dp2px(90));
                 item2.setIcon(R.drawable.ic_action_share);
                 menu.addMenuItem(item2);
+
+                addMenuAction(menu);
+            }
+
+            private void addMenuAction(SwipeMenu menu) {
+                final SwipeMenuItem action = new SwipeMenuItem(getApplicationContext());
+                action.setBackground(new ColorDrawable(Color.rgb(0x30, 0xB1,0xF5)));
+                action.setWidth(mListView.getWidth() - 200);
+                action.setIcon(R.drawable.ic_action_about);
+                menu.addAction(action);
             }
         };
+
         // set creator
-        listView.setMenuCreator(creator);
+        mListView.setMenuCreator(creator);
 
         // step 2. listener item click event
-        listView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+        mListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 ApplicationInfo item = mAppList.get(position);

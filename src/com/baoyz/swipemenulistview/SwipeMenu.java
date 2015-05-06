@@ -15,11 +15,12 @@ public class SwipeMenu {
 
 	private Context mContext;
 	private List<SwipeMenuItem> mItems;
+    private SwipeMenuItem mAction;
 	private int mViewType;
 
 	public SwipeMenu(Context context) {
 		mContext = context;
-		mItems = new ArrayList<SwipeMenuItem>();
+		mItems = new ArrayList<>();
 	}
 
 	public Context getContext() {
@@ -41,6 +42,19 @@ public class SwipeMenu {
 	public SwipeMenuItem getMenuItem(int index) {
 		return mItems.get(index);
 	}
+
+
+    public void addAction(SwipeMenuItem action){
+        mAction = action;
+    }
+
+    public void removeAction(){
+        mAction = null;
+    }
+
+    public SwipeMenuItem getAction(){
+        return mAction;
+    }
 
 	public int getViewType() {
 		return mViewType;
