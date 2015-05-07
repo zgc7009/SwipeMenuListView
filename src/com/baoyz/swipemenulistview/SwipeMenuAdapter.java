@@ -69,8 +69,8 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnSwipeItemClickLis
             SwipeActionView actionView = new SwipeActionView(menu);
             actionView.setOnSwipeActionClickListener(this);
 
-			// This will create a SwipeMenuListView with the contentView being the main item in the list and the menuView being the overlay
-			SwipeMenuListView listView = (SwipeMenuListView) parent;
+			// This will create a SwipeMenuLayout with the contentView being the main item in the view, the menuView being the main overlay, and actionView being
+			// a secondary overlay handled in a slightly different way than the menuView itself
 			layout = new SwipeMenuLayout(contentView, menuView, actionView);
 			layout.setPosition(position);
 		} else {
@@ -101,6 +101,12 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnSwipeItemClickLis
 		menu.addMenuItem(item);
 	}
 
+	/**
+	 * Will create the swipe menu action
+	 * TODO this is what we need to modify for our app
+	 *
+	 * @param menu
+	 */
     public void createMenuAction(SwipeMenu menu){
         // Test Code
         SwipeMenuItem action = new SwipeMenuItem(mContext);

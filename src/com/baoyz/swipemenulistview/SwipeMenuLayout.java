@@ -83,7 +83,7 @@ public class SwipeMenuLayout extends FrameLayout {
 			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 				// TODO
 				if ((e1.getX() - e2.getX()) > MIN_FLING && velocityX < MAX_VELOCITYX) {
-					//isFling = true;
+					isFling = true;	 //TODO need to figure out if fling (and gestures in general) will do us any good
 				}
 				// Log.i("byz", MAX_VELOCITYX + ", velocityX = " + velocityX);
 				return super.onFling(e1, e2, velocityX, velocityY);
@@ -138,12 +138,6 @@ public class SwipeMenuLayout extends FrameLayout {
 			// Log.i("byz", "downX = " + mDownX + ", moveX = " + event.getX());
             Log.d(getClass().getSimpleName(), "Moving");
 			int dis = (int) (mDownX - event.getX());
-            /*
-            if (state == STATE_FULLY_OPEN) {
-                dis += mActionView.getWidth();
-            }
-            */
-
 			if (state == STATE_PARTIALLY_OPEN) {
 				dis += mMenuView.getWidth();
 			}
@@ -153,7 +147,7 @@ public class SwipeMenuLayout extends FrameLayout {
             Log.d(getClass().getSimpleName(), "Up");
 
             // if we aren't flinging AND scrolling past the extent of our menu view
-            // fully open
+            // action
             if(!isFling && (mDownX - event.getX()) > mMenuView.getWidth())
                 smoothPerformAction();
 
@@ -248,7 +242,7 @@ public class SwipeMenuLayout extends FrameLayout {
 	}
 
     public void smoothPerformAction(){
-        Log.d(getClass().getSimpleName(), "Fully opening");
+        Log.d(getClass().getSimpleName(), "Performing action");
         mActionView.getOnSwipeActionClickListener().onActionClick();
         smoothCloseMenu();
     }
