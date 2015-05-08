@@ -1,5 +1,6 @@
 package com.baoyz.swipemenulistview;
 
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,18 +20,19 @@ public class SwipeMenuActionView extends LinearLayout implements View.OnClickLis
         void onActionSwipe(int adapterPosition);
     }
 
-    private SwipeMenuLayout mLayout;
-    private SwipeMenu mMenu;
-    private OnMenuActionSwipeListener onActionClickListener;
-    private int position;
+    private ImageView mIcon;
+    private TextView mTitle;
+    private SwipeMenuItem mMenuItem;
+    private OnMenuActionSwipeListener mOnActionClickListener;
+    private int mPosition;
 
     public void setPosition(int position) {
-        this.position = position;
+        mPosition = position;
     }
 
     public SwipeMenuActionView(SwipeMenu menu) {
         super(menu.getContext());
-        mMenu = menu;
+        mMenuItem = menu.getAction();
         if(menu.getAction() != null)
             addAction(menu.getAction(), 999);
         else
@@ -49,43 +51,63 @@ public class SwipeMenuActionView extends LinearLayout implements View.OnClickLis
         parent.setOnClickListener(this);
         addView(parent);
 
-        if (item.getIcon() != null && SwipeMenuLayout.ALLOW_ICONS_IN_SWIPE_MENU) {
+        if (item.getCurrIcon() != null && SwipeMenuLayout.ALLOW_ICONS_IN_SWIPE_MENU) {
             parent.addView(createIcon(item));
         }
-        if (!TextUtils.isEmpty(item.getTitle())) {
+        if (!TextUtils.isEmpty(item.getCurrTitle())) {
             parent.addView(createTitle(item));
         }
 
     }
 
     private ImageView createIcon(SwipeMenuItem item) {
-        ImageView iv = new ImageView(getContext());
-        iv.setImageDrawable(item.getIcon());
-        return iv;
+        mIcon = new ImageView(getContext());
+        mIcon.setImageDrawable(item.getCurrIcon());
+        return mIcon;
+    }
+
+    public void modifyIcon(Drawable icon){
+        if(mIcon != null)
+            mIcon.setImageDrawable(icon);
     }
 
     private TextView createTitle(SwipeMenuItem item) {
-        TextView tv = new TextView(getContext());
-        tv.setText(item.getTitle());
-        tv.setGravity(Gravity.CENTER);
-        tv.setTextSize(item.getTitleSize());
-        tv.setTextColor(item.getTitleColor());
-        return tv;
+        mTitle = new TextView(getContext());
+        mTitle.setText(item.getCurrTitle());
+        mTitle.setGravity(Gravity.CENTER);
+        mTitle.setTextSize(item.getTitleSize());
+        mTitle.setTextColor(item.getTitleColor());
+        return mTitle;
+    }
+
+    public void modifyTitle(String title){
+        if(mTitle != null)
+            mTitle.setText(title);
     }
 
     @Override
     public void onClick(View v) {
-        if (onActionClickListener != null) {
-            onActionClickListener.onActionSwipe(position); //this , mMenu, v.getId());
+        if (mOnActionClickListener != null) {
+            mOnActionClickListener.onActionSwipe(mPosition); //this , mMenu, v.getId());
+            modifyIcon(mMenuItem.getAndSwitchCurrIcon());
+            modifyTitle(mMenuItem.getAndSwitchCurrTitle());
+            ((SwipeMenuLayout) getParent()).modifyOnPrimaryAction(true);
         }
     }
 
-    public void setOnSwipeActionSwipeListener(OnMenuActionSwipeListener onActionListener) {
-        this.onActionClickListener = onActionListener;
+    /**
+     * When we click to trigger action, we need to make sure we modify the status of the correlating action in our
+     * menu. This will be handled by having the SwipeMenuActionView trigger modifyOnPrimaryAction in our parent
+     * layout (SwipeMenuLayout) from the view's onClick method (look above for how we handle doing a similar thing
+     * for notifying our items that we have performed an action)
+     */
+    public void modifyOnActionItemClicked(){
+        modifyIcon(mMenuItem.getAndSwitchCurrIcon());
+        modifyTitle(mMenuItem.getAndSwitchCurrTitle());
     }
 
-    public void setLayout(SwipeMenuLayout mLayout) {
-        this.mLayout = mLayout;
+    public void setOnSwipeActionSwipeListener(OnMenuActionSwipeListener onActionListener) {
+        this.mOnActionClickListener = onActionListener;
     }
 
 }

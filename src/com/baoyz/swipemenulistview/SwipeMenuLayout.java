@@ -28,7 +28,6 @@ public class SwipeMenuLayout extends FrameLayout {
 
 	private static final int STATE_CLOSE = 0;
 	private static final int STATE_PARTIALLY_OPEN = 1;
-    //private static final int STATE_FULLY_OPEN = 2;
 
 	private int MIN_FLING = dp2px(15);
 	private int MAX_VELOCITYX = -dp2px(500);
@@ -36,7 +35,6 @@ public class SwipeMenuLayout extends FrameLayout {
 
 	private View mContentView;
 	private SwipeMenuItemView mMenuView;
-    private int mMenuViewMaxWidth = 0;
     private SwipeMenuActionView mActionView;
 	private int mDownX;
 	private int state = STATE_CLOSE;
@@ -54,12 +52,7 @@ public class SwipeMenuLayout extends FrameLayout {
 		mMenuView = menuView;
 		mMenuView.setLayout(this);
         mActionView = actionView;
-        mActionView.setLayout(this);
 		init();
-	}
-
-	public int getPosition() {
-		return position;
 	}
 
 	public void setPosition(int position) {
@@ -80,9 +73,8 @@ public class SwipeMenuLayout extends FrameLayout {
 
 			@Override
 			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-				// TODO
 				if ((e1.getX() - e2.getX()) > MIN_FLING && velocityX < MAX_VELOCITYX) {
-					//isFling = true;
+					isFling = true;
 				}
 				// Log.i("byz", MAX_VELOCITYX + ", velocityX = " + velocityX);
 				return super.onFling(e1, e2, velocityX, velocityY);
@@ -136,9 +128,9 @@ public class SwipeMenuLayout extends FrameLayout {
 			// Log.i("byz", "downX = " + mDownX + ", moveX = " + event.getX());
 			int dis = (int) (mDownX - event.getX());
 
-			if (state == STATE_PARTIALLY_OPEN) {
-				dis += mMenuView.getWidth();
-			}
+			//if (state == STATE_PARTIALLY_OPEN)
+			//	dis += mMenuView.getWidth();
+
 			swipe(dis);
 			break;
 		case MotionEvent.ACTION_UP:
@@ -148,9 +140,9 @@ public class SwipeMenuLayout extends FrameLayout {
             if(!isFling && (mDownX - event.getX()) > mMenuView.getWidth())
                 smoothPerformAction();
 
-            // else if we are flinging OR scrolling and have scrolled at least half the width of the menu view
+            // else if we are flinging OR scrolling and have scrolled at least a quarter of the width of the menu view
             // partially open
-			else if (isFling || (mDownX - event.getX()) > (mMenuView.getWidth() / 2))
+			else if (isFling || (mDownX - event.getX()) > (mMenuView.getWidth() / 4))
                 smoothPartiallyOpenMenu();
 
             // else, close
@@ -260,13 +252,20 @@ public class SwipeMenuLayout extends FrameLayout {
 		}
 	}
 
-	public View getContentView() {
-		return mContentView;
-	}
-
-	public SwipeMenuItemView getMenuView() {
-		return mMenuView;
-	}
+    /**
+     * Since our swipe action will have a button that it corresponds to within our menu item, we need to sure
+     * we maintain the same status between them. To do this, from the onClick method of our SwipeMenuItemView
+     * and SwipeMenuActionView we will call this method so that we can notify the corresponding view that
+     * it needs to switch.
+     *
+     * @param onSwipe
+     */
+    public void modifyOnPrimaryAction(boolean onSwipe){
+        if(onSwipe)
+            mMenuView.modifyOnActionSwiped();
+        else
+            mActionView.modifyOnActionItemClicked();
+    }
 
 	private int dp2px(int dp) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
@@ -288,16 +287,5 @@ public class SwipeMenuLayout extends FrameLayout {
 		mMenuView.layout(getMeasuredWidth(), 0,
 				getMeasuredWidth() + mMenuView.getMeasuredWidth(),
 				mContentView.getMeasuredHeight());
-		// setMenuHeight(mContentView.getMeasuredHeight());
-		// bringChildToFront(mContentView);
-	}
-
-	public void setMenuHeight(int measuredHeight) {
-		Log.i("byz", "pos = " + position + ", height = " + measuredHeight);
-		LayoutParams params = (LayoutParams) mMenuView.getLayoutParams();
-		if (params.height != measuredHeight) {
-			params.height = measuredHeight;
-			mMenuView.setLayoutParams(mMenuView.getLayoutParams());
-		}
 	}
 }

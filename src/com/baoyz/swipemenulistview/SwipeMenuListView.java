@@ -27,6 +27,7 @@ public class SwipeMenuListView extends ListView {
 	private float mDownY;
 	private int mTouchState;
 	private int mTouchPosition;
+    private SwipeMenuAdapter mSwipeAdapter;
 	private SwipeMenuLayout mTouchView;
     private SwipeMenuItemView.OnMenuItemClickListener mOnMenuItemClickListener;
     private SwipeMenuActionView.OnMenuActionSwipeListener mOnMenuActionSwipeListener;
@@ -84,7 +85,8 @@ public class SwipeMenuListView extends ListView {
 
 	@Override
 	public void setAdapter(ListAdapter adapter) {
-        super.setAdapter(buildSwipeAdapter(adapter));
+        mSwipeAdapter = buildSwipeAdapter(adapter);
+        super.setAdapter(mSwipeAdapter);
 	}
 
     /**

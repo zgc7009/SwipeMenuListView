@@ -43,23 +43,23 @@ public class MainActivity extends Activity {
                 SwipeMenuItem item1 = new SwipeMenuItem(
                         getApplicationContext());
                 item1.setBackground(new ColorDrawable(Color.rgb(0xE5, 0x18, 0x5E)));
-                item1.setWidth(dp2px(120));
-                item1.setIcon(R.drawable.ic_action_favorite);
-                item1.setTitle("Option 1");
+                item1.setWidth(dp2px(150));
+                item1.setIcons(R.drawable.ic_action_favorite, R.drawable.ic_action_about);
+                item1.setTitles("Option 1", "Alt Option 1");
                 menu.addMenuItem(item1);
 
                 SwipeMenuItem item2 = new SwipeMenuItem(getApplicationContext());
                 item2.setBackground(new ColorDrawable(Color.rgb(0x30, 0xB1, 0xF5)));
-                item2.setWidth(dp2px(120));
-                item2.setIcon(R.drawable.ic_action_good);
-                item2.setTitle("Option 2");
+                item2.setWidth(dp2px(150));
+                item2.setIcons(R.drawable.ic_action_good, R.drawable.ic_action_about);
+                item2.setTitles("Option 2", "Alt Option 2");
                 menu.addMenuItem(item2);
 
                 SwipeMenuItem item3 = new SwipeMenuItem(getApplicationContext());
                 item3.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
-                item3.setWidth(dp2px(120));
-                item3.setIcon(R.drawable.ic_action_share);
-                item3.setTitle("Option 3");
+                item3.setWidth(dp2px(150));
+                item3.setIcons(R.drawable.ic_action_share, R.drawable.ic_action_about);
+                item3.setTitles("Option 3", "Alt Option 3");
                 menu.addMenuItem(item3);
             }
 
@@ -67,8 +67,8 @@ public class MainActivity extends Activity {
                 final SwipeMenuItem action = new SwipeMenuItem(getApplicationContext());
                 action.setBackground(new ColorDrawable(Color.rgb(0x30, 0xB1,0xF5)));
                 action.setWidth(mListView.getWidth() - 200);
-                action.setIcon(R.drawable.ic_action_about);
-                action.setTitle("Action");
+                action.setIcons(R.drawable.ic_action_about, R.drawable.ic_action_discard);
+                action.setTitles("Action", "Alt Action");
                 menu.addAction(action);
             }
         };

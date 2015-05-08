@@ -19,8 +19,12 @@ public class SwipeMenuItem {
 
 	private int id;
 	private Context mContext;
+    private String currTitle;
 	private String title;
+    private String altTitle;
+    private Drawable currIcon;
 	private Drawable icon;
+    private Drawable altIcon;
 	private Drawable background;
 	private int titleColor = DEFAULT_TEXT_COLOR;
 	private int titleSize = DEFAULT_TEXT_SIZE;
@@ -54,28 +58,42 @@ public class SwipeMenuItem {
 		this.titleColor = titleColor;
 	}
 
-	public String getTitle() {
-		return title;
-	}
+    public String getCurrTitle(){
+        return currTitle;
+    }
 
-	public void setTitle(String title) {
+    public String getAndSwitchCurrTitle(){
+        currTitle = (currTitle.equals(title)? altTitle: title);
+        return currTitle;
+    }
+
+	public void setTitles(String title, String altTitle) {
 		this.title = title;
+        this.altTitle = altTitle;
+        currTitle = title;
 	}
 
-	public void setTitle(int resId) {
-		setTitle(mContext.getString(resId));
+	public void setTitles(int resId, int altResId) {
+		setTitles(mContext.getString(resId), mContext.getString(altResId));
 	}
 
-	public Drawable getIcon() {
+    public Drawable getAndSwitchCurrIcon(){
+        currIcon = (currIcon.equals(icon)? altIcon: icon);
+        return currIcon;
+    }
+
+	public Drawable getCurrIcon() {
 		return icon;
 	}
 
-	public void setIcon(Drawable icon) {
+	public void setIcons(Drawable icon, Drawable altIcon) {
 		this.icon = icon;
+        this.altIcon = altIcon;
+        currIcon = icon;
 	}
 
-	public void setIcon(int resId) {
-		this.icon = mContext.getResources().getDrawable(resId);
+	public void setIcons(int resId, int altResId) {
+		setIcons(mContext.getResources().getDrawable(resId), mContext.getResources().getDrawable(altResId));
 	}
 
 	public Drawable getBackground() {

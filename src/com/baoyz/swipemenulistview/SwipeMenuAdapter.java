@@ -50,7 +50,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnMenuItemClickList
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public SwipeMenuLayout getView(int position, View convertView, ViewGroup parent) {
 		SwipeMenuLayout layout;
 
 		if (convertView == null) {
@@ -81,12 +81,6 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnMenuItemClickList
 		return layout;
 	}
 
-	/**
-	 * Will create our swipe menu
-	 * TODO this is what we need to modify for our app
-	 *
-	 * @param menu
-	 */
 	public void createMenu(SwipeMenu menu) {}
 
 	@Override
@@ -145,5 +139,4 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnMenuItemClickList
 	public ListAdapter getWrappedAdapter() {
 		return mAdapter;
 	}
-
 }
