@@ -1,14 +1,13 @@
 package com.baoyz.swipemenulistview;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Interpolator;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * 
@@ -17,16 +16,6 @@ import android.widget.ListView;
  * 
  */
 public class SwipeMenuListView extends ListView {
-
-	public static interface OnMenuItemClickListener {
-		boolean onMenuItemClick(int position, SwipeMenu menu, int index);
-	}
-
-	public static interface OnSwipeListener {
-		void onSwipeStart(int position);
-
-		void onSwipeEnd(int position);
-	}
 
 	private static final int TOUCH_STATE_NONE = 0;
 	private static final int TOUCH_STATE_X = 1;
@@ -39,10 +28,10 @@ public class SwipeMenuListView extends ListView {
 	private int mTouchState;
 	private int mTouchPosition;
 	private SwipeMenuLayout mTouchView;
-	private OnSwipeListener mOnSwipeListener;
+    private SwipeMenuItemView.OnMenuItemClickListener mOnMenuItemClickListener;
+    private SwipeMenuActionView.OnMenuActionSwipeListener mOnMenuActionSwipeListener;
 
 	private ISwipeMenuCreator mMenuCreator;
-	private OnMenuItemClickListener mOnMenuItemClickListener;
 
 	public SwipeMenuListView(Context context) {
 		super(context);
@@ -63,36 +52,67 @@ public class SwipeMenuListView extends ListView {
 		MAX_X = dp2px(MAX_X);
 		MAX_Y = dp2px(MAX_Y);
 		mTouchState = TOUCH_STATE_NONE;
+        initMenuListeners();
 	}
+
+    /**
+     * TODO this will provide our click functionality.
+     *
+     * The idea is that we will pass these listeners to our SwipeMenuAdapter, the adapter has overridden the listener
+     * methods, and will apply these listeners within those methods. It will attach the listeners to the SwipeMenuItemView
+     * and SwipeMenuActionView's onClick method (from within getView) so that we can call onClick on those views and
+     * trigger our callbacks for these listeners.
+     */
+    private void initMenuListeners(){
+        mOnMenuItemClickListener = new SwipeMenuItemView.OnMenuItemClickListener() {
+            @Override
+            public void onItemClick(int adapterPosition, SwipeMenu menu, int index) {
+                Toast.makeText(getContext(), "Clicking on index " + index + " in " + adapterPosition, Toast.LENGTH_SHORT).show();
+                if (mTouchView != null) {
+                    mTouchView.smoothCloseMenu();
+                }
+            }
+        };
+
+        mOnMenuActionSwipeListener = new SwipeMenuActionView.OnMenuActionSwipeListener() {
+            @Override
+            public void onActionSwipe(int adapterPosition) {
+                Toast.makeText(getContext(), "Swiping action in " + adapterPosition, Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
 
 	@Override
 	public void setAdapter(ListAdapter adapter) {
-		super.setAdapter(new SwipeMenuAdapter(getContext(), adapter) {
-			@Override
-			public void createMenu(SwipeMenu menu) {
-				if (mMenuCreator != null) {
-					mMenuCreator.create(menu);
-				}
-			}
-
-			@Override
-			public void onItemClick(SwipeMenuView view, SwipeMenu menu,
-					int index) {
-				boolean flag = false;
-				if (mOnMenuItemClickListener != null) {
-					flag = mOnMenuItemClickListener.onMenuItemClick(view.getPosition(), menu, index);
-				}
-				if (mTouchView != null && !flag) {
-					mTouchView.smoothCloseMenu();
-				}
-			}
-		});
+        super.setAdapter(buildSwipeAdapter(adapter));
 	}
 
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		return super.onInterceptTouchEvent(ev);
-	}
+    /**
+     * Will provide a swap adapter that will overlay our current adapter and provide our menu views
+     *
+     * @param adapter
+     * @return
+     */
+    private SwipeMenuAdapter buildSwipeAdapter(ListAdapter adapter){
+        return new SwipeMenuAdapter(getContext(), adapter, mOnMenuItemClickListener, mOnMenuActionSwipeListener) {
+            @Override
+            public void createMenu(SwipeMenu menu) {
+                if (mMenuCreator != null) {
+                    mMenuCreator.create(menu);
+                }
+            }
+
+            @Override
+            public void onItemClick(int adapterPosition, SwipeMenu menu, int index) {
+                mOnMenuItemClickListener.onItemClick(adapterPosition, menu, index);
+            }
+
+            @Override
+            public void onActionSwipe(int adapterPosition){
+                mOnMenuActionSwipeListener.onActionSwipe(adapterPosition);
+            }
+        };
+    }
 
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
@@ -156,9 +176,6 @@ public class SwipeMenuListView extends ListView {
 					mTouchState = TOUCH_STATE_Y;
 				} else if (dx > MAX_X) {
 					mTouchState = TOUCH_STATE_X;
-					if (mOnSwipeListener != null) {
-						mOnSwipeListener.onSwipeStart(mTouchPosition);
-					}
 				}
 			}
 			break;
@@ -170,9 +187,6 @@ public class SwipeMenuListView extends ListView {
 						mTouchPosition = -1;
 						mTouchView = null;
 					}
-				}
-				if (mOnSwipeListener != null) {
-					mOnSwipeListener.onSwipeEnd(mTouchPosition);
 				}
 				ev.setAction(MotionEvent.ACTION_CANCEL);
 				super.onTouchEvent(ev);
@@ -190,14 +204,5 @@ public class SwipeMenuListView extends ListView {
 
 	public void setMenuCreator(ISwipeMenuCreator menuCreator) {
 		this.mMenuCreator = menuCreator;
-	}
-
-	public void setOnMenuItemClickListener(
-			OnMenuItemClickListener onMenuItemClickListener) {
-		this.mOnMenuItemClickListener = onMenuItemClickListener;
-	}
-
-	public void setOnSwipeListener(OnSwipeListener onSwipeListener) {
-		this.mOnSwipeListener = onSwipeListener;
 	}
 }

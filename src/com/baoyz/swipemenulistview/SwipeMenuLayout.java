@@ -1,20 +1,16 @@
 package com.baoyz.swipemenulistview;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.widget.ScrollerCompat;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Interpolator;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 /**
  * 
@@ -23,6 +19,8 @@ import android.widget.LinearLayout;
  * 
  */
 public class SwipeMenuLayout extends FrameLayout {
+
+    public static final boolean ALLOW_ICONS_IN_SWIPE_MENU = false;
 
 	private static final int CONTENT_VIEW_ID = 1;
 	private static final int MENU_VIEW_ID = 2;
@@ -37,9 +35,9 @@ public class SwipeMenuLayout extends FrameLayout {
     private int FULL_OPEN_BUFFER = dp2px(100);
 
 	private View mContentView;
-	private SwipeMenuView mMenuView;
+	private SwipeMenuItemView mMenuView;
     private int mMenuViewMaxWidth = 0;
-    private SwipeActionView mActionView;
+    private SwipeMenuActionView mActionView;
 	private int mDownX;
 	private int state = STATE_CLOSE;
 	private GestureDetectorCompat mGestureDetector;
@@ -50,7 +48,7 @@ public class SwipeMenuLayout extends FrameLayout {
 	private int mBaseX;
 	private int position;
 
-	public SwipeMenuLayout(View contentView, SwipeMenuView menuView, SwipeActionView actionView) {
+	public SwipeMenuLayout(View contentView, SwipeMenuItemView menuView, SwipeMenuActionView actionView) {
 		super(contentView.getContext());
 		mContentView = contentView;
 		mMenuView = menuView;
@@ -67,6 +65,7 @@ public class SwipeMenuLayout extends FrameLayout {
 	public void setPosition(int position) {
 		this.position = position;
 		mMenuView.setPosition(position);
+        mActionView.setPosition(position);
 	}
 
 	private void init() {
@@ -107,7 +106,7 @@ public class SwipeMenuLayout extends FrameLayout {
 
         mActionView.setId(ACTION_VIEW_ID);
         mActionView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT));
+                LayoutParams.MATCH_PARENT));
 
 		addView(mContentView);
 		addView(mMenuView);
@@ -129,20 +128,13 @@ public class SwipeMenuLayout extends FrameLayout {
 		mGestureDetector.onTouchEvent(event);
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-            Log.d(getClass().getSimpleName(), "Down");
 
 			mDownX = (int) event.getX();
 			isFling = false;
 			break;
 		case MotionEvent.ACTION_MOVE:
 			// Log.i("byz", "downX = " + mDownX + ", moveX = " + event.getX());
-            Log.d(getClass().getSimpleName(), "Moving");
 			int dis = (int) (mDownX - event.getX());
-            /*
-            if (state == STATE_FULLY_OPEN) {
-                dis += mActionView.getWidth();
-            }
-            */
 
 			if (state == STATE_PARTIALLY_OPEN) {
 				dis += mMenuView.getWidth();
@@ -150,7 +142,6 @@ public class SwipeMenuLayout extends FrameLayout {
 			swipe(dis);
 			break;
 		case MotionEvent.ACTION_UP:
-            Log.d(getClass().getSimpleName(), "Up");
 
             // if we aren't flinging AND scrolling past the extent of our menu view
             // fully open
@@ -183,7 +174,6 @@ public class SwipeMenuLayout extends FrameLayout {
 	}
 
     private void swipe(int dis) {
-        Log.d(getClass().getSimpleName(), "Dis " + dis + " vs Width " + mMenuView.getWidth());
         boolean fullyOpen = false;
         if (dis > mMenuView.getWidth() && state != STATE_PARTIALLY_OPEN) {
             fullyOpen = true;
@@ -208,7 +198,6 @@ public class SwipeMenuLayout extends FrameLayout {
         else{
             mMenuView.layout(mContentView.getWidth(), mMenuView.getTop(),
                     mContentView.getWidth() + mMenuView.getWidth(), mMenuView.getBottom());
-            mActionView.setBackgroundColor(Color.BLUE);
             mActionView.layout(mContentView.getWidth() - dis, mMenuView.getTop(),
                     mContentView.getWidth(), mMenuView.getBottom());
         }
@@ -216,7 +205,6 @@ public class SwipeMenuLayout extends FrameLayout {
 
 	@Override
 	public void computeScroll() {
-        Log.d(getClass().getSimpleName(), "We are computer scroll with state " + state);
 		if (state == STATE_PARTIALLY_OPEN) {
 			if (mOpenScroller.computeScrollOffset()) {
 				swipe(mOpenScroller.getCurrX());
@@ -249,7 +237,7 @@ public class SwipeMenuLayout extends FrameLayout {
 
     public void smoothPerformAction(){
         Log.d(getClass().getSimpleName(), "Fully opening");
-        mActionView.getOnSwipeActionClickListener().onActionClick();
+        mActionView.onClick(mActionView);
         smoothCloseMenu();
     }
 
@@ -276,7 +264,7 @@ public class SwipeMenuLayout extends FrameLayout {
 		return mContentView;
 	}
 
-	public SwipeMenuView getMenuView() {
+	public SwipeMenuItemView getMenuView() {
 		return mMenuView;
 	}
 

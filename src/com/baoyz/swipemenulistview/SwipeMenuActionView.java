@@ -13,13 +13,22 @@ import java.util.List;
 /**
  * Created by zach on 5/6/15.
  */
-public class SwipeActionView extends LinearLayout implements View.OnClickListener {
+public class SwipeMenuActionView extends LinearLayout implements View.OnClickListener {
+
+    public static interface OnMenuActionSwipeListener {
+        void onActionSwipe(int adapterPosition);
+    }
 
     private SwipeMenuLayout mLayout;
     private SwipeMenu mMenu;
-    private OnMenuActionClickListener onActionClickListener;
+    private OnMenuActionSwipeListener onActionClickListener;
+    private int position;
 
-    public SwipeActionView(SwipeMenu menu) {
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public SwipeMenuActionView(SwipeMenu menu) {
         super(menu.getContext());
         mMenu = menu;
         if(menu.getAction() != null)
@@ -29,7 +38,7 @@ public class SwipeActionView extends LinearLayout implements View.OnClickListene
     }
 
     private void addAction(SwipeMenuItem item, int id) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(item.getWidth(), LinearLayout.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(item.getWidth(), LayoutParams.MATCH_PARENT);
         LinearLayout parent = new LinearLayout(getContext());
         parent.setId(id);
         parent.setGravity(Gravity.CENTER);
@@ -40,7 +49,7 @@ public class SwipeActionView extends LinearLayout implements View.OnClickListene
         parent.setOnClickListener(this);
         addView(parent);
 
-        if (item.getIcon() != null) {
+        if (item.getIcon() != null && SwipeMenuLayout.ALLOW_ICONS_IN_SWIPE_MENU) {
             parent.addView(createIcon(item));
         }
         if (!TextUtils.isEmpty(item.getTitle())) {
@@ -66,16 +75,12 @@ public class SwipeActionView extends LinearLayout implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if (onActionClickListener != null && mLayout.isOpen()) {
-            onActionClickListener.onActionClick(); //this , mMenu, v.getId());
+        if (onActionClickListener != null) {
+            onActionClickListener.onActionSwipe(position); //this , mMenu, v.getId());
         }
     }
 
-    public OnMenuActionClickListener getOnSwipeActionClickListener() {
-        return onActionClickListener;
-    }
-
-    public void setOnSwipeActionClickListener(OnMenuActionClickListener onActionListener) {
+    public void setOnSwipeActionSwipeListener(OnMenuActionSwipeListener onActionListener) {
         this.onActionClickListener = onActionListener;
     }
 
@@ -83,7 +88,4 @@ public class SwipeActionView extends LinearLayout implements View.OnClickListene
         this.mLayout = mLayout;
     }
 
-    public static interface OnMenuActionClickListener {
-        void onActionClick();
-    }
 }

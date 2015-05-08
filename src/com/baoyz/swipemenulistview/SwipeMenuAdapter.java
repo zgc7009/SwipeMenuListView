@@ -4,15 +4,13 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
 
-import com.baoyz.swipemenulistview.SwipeMenuListView.OnMenuItemClickListener;
-import com.baoyz.swipemenulistview.SwipeMenuView.OnSwipeItemClickListener;
-import com.baoyz.swipemenulistview.SwipeActionView.OnMenuActionClickListener;
+import com.baoyz.swipemenulistview.SwipeMenuItemView.OnMenuItemClickListener;
+import com.baoyz.swipemenulistview.SwipeMenuActionView.OnMenuActionSwipeListener;
 
 /**
  * 
@@ -20,17 +18,20 @@ import com.baoyz.swipemenulistview.SwipeActionView.OnMenuActionClickListener;
  * @date 2014-8-24
  * 
  */
-public class SwipeMenuAdapter implements WrapperListAdapter, OnSwipeItemClickListener, OnMenuActionClickListener {
+public class SwipeMenuAdapter implements WrapperListAdapter, OnMenuItemClickListener, OnMenuActionSwipeListener {
 
     private ListAdapter mAdapter;
 
 	private Context mContext;
-	private OnMenuItemClickListener onMenuItemClickListener;
-    private OnMenuActionClickListener onActionClickListener;
+	private OnMenuItemClickListener mOnMenuItemClickListener;
+    private OnMenuActionSwipeListener mOnMenuActionSwipeListener;
 
-	public SwipeMenuAdapter(Context context, ListAdapter adapter) {
+	public SwipeMenuAdapter(Context context, ListAdapter adapter, SwipeMenuItemView.OnMenuItemClickListener onMenuItemClickListener,
+                            SwipeMenuActionView.OnMenuActionSwipeListener onMenuActionSwipeListener) {
 		mAdapter = adapter;
 		mContext = context;
+        mOnMenuItemClickListener = onMenuItemClickListener;
+        mOnMenuActionSwipeListener = onMenuActionSwipeListener;
 	}
 
 	@Override
@@ -59,18 +60,16 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnSwipeItemClickLis
 			SwipeMenu menu = new SwipeMenu(mContext);
 			menu.setViewType(mAdapter.getItemViewType(position));
 			createMenu(menu);                               // create menu
-            createMenuAction(menu);      // attach action to menu
 
 			// Manage SwipeMenuView
-			SwipeMenuView menuView = new SwipeMenuView(menu);
-			menuView.setOnSwipeItemClickListener(this);
+			SwipeMenuItemView menuView = new SwipeMenuItemView(menu);
+			menuView.setOnMenuItemClickListener(this);
 
             // Manage SwipeActionView
-            SwipeActionView actionView = new SwipeActionView(menu);
-            actionView.setOnSwipeActionClickListener(this);
+            SwipeMenuActionView actionView = new SwipeMenuActionView(menu);
+            actionView.setOnSwipeActionSwipeListener(this);
 
 			// This will create a SwipeMenuListView with the contentView being the main item in the list and the menuView being the overlay
-			SwipeMenuListView listView = (SwipeMenuListView) parent;
 			layout = new SwipeMenuLayout(contentView, menuView, actionView);
 			layout.setPosition(position);
 		} else {
@@ -88,46 +87,18 @@ public class SwipeMenuAdapter implements WrapperListAdapter, OnSwipeItemClickLis
 	 *
 	 * @param menu
 	 */
-	public void createMenu(SwipeMenu menu) {
-		// Test Code
-		SwipeMenuItem item = new SwipeMenuItem(mContext);
-		item.setTitle("Item 1");
-		item.setBackground(new ColorDrawable(Color.GRAY));
-		menu.addMenuItem(item);
-
-		item = new SwipeMenuItem(mContext);
-		item.setTitle("Item 2");
-		item.setBackground(new ColorDrawable(Color.RED));
-		menu.addMenuItem(item);
-	}
-
-    public void createMenuAction(SwipeMenu menu){
-        // Test Code
-        SwipeMenuItem action = new SwipeMenuItem(mContext);
-        action.setTitle("Action");
-        action.setBackground(new ColorDrawable(Color.BLUE));
-        menu.addAction(action);
-    }
+	public void createMenu(SwipeMenu menu) {}
 
 	@Override
-	public void onItemClick(SwipeMenuView view, SwipeMenu menu, int index) {
-		if (onMenuItemClickListener != null) {
-			onMenuItemClickListener.onMenuItemClick(view.getPosition(), menu,
-					index);
-		}
-	}
-
-    @Override
-    public void onActionClick() {
-
+	public void onItemClick(int adapterPosition, SwipeMenu menu, int index) {
+        if (mOnMenuItemClickListener != null)
+            mOnMenuItemClickListener.onItemClick(adapterPosition, menu, index);
     }
 
-	public void setOnMenuItemClickListener(OnMenuItemClickListener onMenuItemClickListener) {
-		this.onMenuItemClickListener = onMenuItemClickListener;
-	}
-
-    public void setOnSwipeActionClickListener(OnMenuActionClickListener onActionClickListener){
-        this.onActionClickListener = onActionClickListener;
+    @Override
+    public void onActionSwipe(int adapterPosition) {
+        if (mOnMenuActionSwipeListener != null)
+            mOnMenuActionSwipeListener.onActionSwipe(adapterPosition);
     }
 
 	@Override

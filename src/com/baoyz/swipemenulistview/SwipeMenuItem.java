@@ -2,6 +2,7 @@ package com.baoyz.swipemenulistview;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -12,14 +13,18 @@ import android.graphics.drawable.Drawable;
  */
 public class SwipeMenuItem {
 
+    private static final int DEFAULT_TEXT_COLOR = Color.WHITE;
+    private static final int DEFAULT_TEXT_SIZE = 12;
+    private static final int DEFAULT_WIDTH = 120;
+
 	private int id;
 	private Context mContext;
 	private String title;
 	private Drawable icon;
 	private Drawable background;
-	private int titleColor;
-	private int titleSize;
-	private int width;
+	private int titleColor = DEFAULT_TEXT_COLOR;
+	private int titleSize = DEFAULT_TEXT_SIZE;
+	private int width = DEFAULT_WIDTH;
 
 	public SwipeMenuItem(Context context) {
 		mContext = context;

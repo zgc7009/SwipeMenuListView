@@ -43,7 +43,6 @@ public class SwipeMenu {
 		return mItems.get(index);
 	}
 
-
     public void addAction(SwipeMenuItem action){
         mAction = action;
     }

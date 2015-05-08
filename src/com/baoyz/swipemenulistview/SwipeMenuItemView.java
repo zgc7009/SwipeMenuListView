@@ -3,6 +3,7 @@ package com.baoyz.swipemenulistview;
 import java.util.List;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,25 +17,27 @@ import android.widget.TextView;
  * @date 2014-8-23
  * 
  */
-public class SwipeMenuView extends LinearLayout implements OnClickListener {
+public class SwipeMenuItemView extends LinearLayout implements OnClickListener {
+
+    public static interface OnMenuItemClickListener {
+        void onItemClick(int adapterPosition, SwipeMenu menu, int index);
+    }
 
 	private SwipeMenuLayout mLayout;
 	private SwipeMenu mMenu;
-	private OnSwipeItemClickListener onItemClickListener;
+    private TextView[] tv;
+	private OnMenuItemClickListener onItemClickListener;
 	private int position;
-
-	public int getPosition() {
-		return position;
-	}
 
 	public void setPosition(int position) {
 		this.position = position;
 	}
 
-	public SwipeMenuView(SwipeMenu menu) {
+	public SwipeMenuItemView(SwipeMenu menu) {
 		super(menu.getContext());
 		mMenu = menu;
 		List<SwipeMenuItem> items = menu.getMenuItems();
+        tv = new TextView[items.size()];
 		int id = 0;
 		for (SwipeMenuItem item : items) {
 			addItem(item, id++);
@@ -53,11 +56,11 @@ public class SwipeMenuView extends LinearLayout implements OnClickListener {
 		parent.setOnClickListener(this);
 		addView(parent);
 
-		if (item.getIcon() != null) {
-			parent.addView(createIcon(item));
-		}
+        if (item.getIcon() != null && SwipeMenuLayout.ALLOW_ICONS_IN_SWIPE_MENU) {
+            parent.addView(createIcon(item));
+        }
 		if (!TextUtils.isEmpty(item.getTitle())) {
-			parent.addView(createTitle(item));
+			parent.addView(createTitle(item, id));
 		}
 
 	}
@@ -68,35 +71,33 @@ public class SwipeMenuView extends LinearLayout implements OnClickListener {
 		return iv;
 	}
 
-	private TextView createTitle(SwipeMenuItem item) {
+	private TextView createTitle(SwipeMenuItem item, int id) {
 		TextView tv = new TextView(getContext());
 		tv.setText(item.getTitle());
 		tv.setGravity(Gravity.CENTER);
 		tv.setTextSize(item.getTitleSize());
 		tv.setTextColor(item.getTitleColor());
+        this.tv[id] = tv;
 		return tv;
 	}
+
+    public void modifyTitle(String text, int id){
+        if(tv[id] != null)
+            tv[id].setText(text);
+    }
 
 	@Override
 	public void onClick(View v) {
 		if (onItemClickListener != null && mLayout.isOpen()) {
-			onItemClickListener.onItemClick(this, mMenu, v.getId());
+			onItemClickListener.onItemClick(position, mMenu, v.getId());
 		}
 	}
 
-	public OnSwipeItemClickListener getOnSwipeItemClickListener() {
-		return onItemClickListener;
-	}
-
-	public void setOnSwipeItemClickListener(OnSwipeItemClickListener onItemClickListener) {
+	public void setOnMenuItemClickListener(OnMenuItemClickListener onItemClickListener) {
 		this.onItemClickListener = onItemClickListener;
 	}
 
 	public void setLayout(SwipeMenuLayout mLayout) {
 		this.mLayout = mLayout;
-	}
-
-	public static interface OnSwipeItemClickListener {
-		void onItemClick(SwipeMenuView view, SwipeMenu menu, int index);
 	}
 }
